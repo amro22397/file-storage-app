@@ -1,3 +1,5 @@
+"use client";
+
 // import { Doc, Id } from "../../../../convex/_generated/dataModel";
 import {
   DropdownMenu,
@@ -14,6 +16,9 @@ import {
   TrashIcon,
   UndoIcon,
 } from "lucide-react";
+import { FaRegStar } from "react-icons/fa6";
+import { FaStar } from "react-icons/fa";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,70 +34,128 @@ import { useState } from "react";
 // import { api } from "../../../../convex/_generated/api";
 // import { Protect } from "@clerk/nextjs";
 
-import React from 'react'
+import React from "react";
 import { toast } from "@/hooks/use-toast";
 import axios from "axios";
 import { UploadedFile } from "./file-browser";
+import { usePathname } from "next/navigation";
 
 const FileCardActions = ({
-    file,
-  }: {
-    file: UploadedFile
-  }) => {
+  file,
+  isFavorited,
+}: {
+  file: UploadedFile;
+  isFavorited: boolean;
+}) => {
+  // const { toast } = useToast();
 
-    // const { toast } = useToast();
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [isDeletePermenantly, setIsDeletePermenantly] = useState(false);
 
-    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
-    const [deleteLoading, setDeleteLoading] = useState(false);
+  const pathname = usePathname();
 
+  const handleFavourite = async (id: string) => {
+    const res = await axios.put(`/api/upload/favourite/${id}`);
 
-    const handleFavourite = async (id: string) => {
+    if (res.data.success) {
+      toast({
+        title: res.data.message,
+      });
 
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    }
+  };
 
-      const res = await axios.put(`/api/upload/favourite/${id}`)
+  const handleTrashFile = async (id: string) => {
+    const res = await axios.put(`/api/upload/trash/${id}`);
 
-      if (res.data.success) {
-        toast({
-          title: res.data.message,
-        });
+    if (res.data.success) {
+      toast({
+        title: res.data.message,
+      });
 
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
-      }
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    }
+  };
 
+  const handleRestoreFile = async (id: string) => {
+    const res = await axios.put(`/api/upload/restore/${id}`);
 
+    if (res.data.success) {
+      toast({
+        title: res.data.message,
+      });
     }
 
-
-    const handleDeleteFile = async (id: string) => {
-
-      setDeleteLoading(true);
-
-      const res = await axios.delete(`/api/upload/${id}`);
-
-      if (res.data) {
-        toast({
-          variant: "default",
-          title: "File is deleted",
-        });
-      }
-
+    setTimeout(() => {
       window.location.reload();
+    }, 2500);
+  };
 
-      setDeleteLoading(false);
+  const handleDeleteFile = async (id: string) => {
+    
 
+    const res = await axios.delete(`/api/upload/${id}`);
+
+    if (res.data.success) {
+      toast({
+        variant: "destructive",
+        title: res.data.message,
+      });
     }
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 2500);
+
+    
+  };
 
   return (
     <>
       <AlertDialog open={isConfirmOpen} onOpenChange={setIsConfirmOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogTitle>Are you sure you want to trash the file?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action will mark the file for our deletion process. Files are
-              deleted periodically
+              The action will move the file to the trash. If you want to
+              permenantly delete the file, delete it from the trash.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                handleTrashFile(file._id);
+
+                // if (file.isTrash && pathname?.includes("trash")) {
+                //   handleRestoreFile(file._id);
+                // } else {
+                  
+                // }
+                // handleDeleteFile(file._id);
+              }}
+            >
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+
+
+
+      <AlertDialog open={isDeletePermenantly} onOpenChange={setIsDeletePermenantly}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure you want to delete this file permenantly?</AlertDialogTitle>
+            <AlertDialogDescription>
+              The action will delete the file permenantly. You will not be able to restore the file.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -108,41 +171,50 @@ const FileCardActions = ({
         </AlertDialogContent>
       </AlertDialog>
 
+
+
+
       <DropdownMenu>
         <DropdownMenuTrigger>
           <MoreVertical />
         </DropdownMenuTrigger>
+
         <DropdownMenuContent>
-          <DropdownMenuItem
-            onClick={() => {
-              if (!file.url) return;
-              window.open(file.url, "_blank");
-            }}
-            className="flex gap-1 items-center cursor-pointer"
-          >
-            <FileIcon className="w-4 h-4" /> Download
-          </DropdownMenuItem>
+          {file.isTrash !== true && !pathname?.includes("trash") && (
+            <DropdownMenuItem
+              onClick={() => {
+                if (!file.file) return;
+                window.open(file.file, "_blank");
+              }}
+              className="flex gap-1 items-center cursor-pointer"
+            >
+              <FileIcon className="w-4 h-4" /> Download
+            </DropdownMenuItem>
+          )}
 
-          <DropdownMenuItem
-            onClick={() => {
-              handleFavourite(file._id);
 
-            //   toggleFavorite({
-            //     fileId: file._id,
-            //   });
-            }}
-            className="flex gap-1 items-center cursor-pointer"
-          >
-            {file.isFavorite ? (
-              <div className="flex gap-1 items-center">
-                <StarIcon className="w-4 h-4" /> Unfavorite
-              </div>
-            ) : (
-              <div className="flex gap-1 items-center">
-                <StarHalf className="w-4 h-4" /> Favorite
-              </div>
-            )}
-          </DropdownMenuItem>
+          {file.isTrash !== true && !pathname?.includes("trash") && (
+            <DropdownMenuItem 
+              onClick={() => {
+                handleFavourite(file._id);
+
+                //   toggleFavorite({
+                //     fileId: file._id,
+                //   });
+              }}
+              className="flex gap-1 items-center cursor-pointer"
+            >
+              {file.isFavorite ? (
+                <div className="flex gap-1 items-center">
+                  <FaRegStar className="w-4 h-4" /> Unfavorite
+                </div>
+              ) : (
+                <div className="flex gap-1 items-center">
+                  <FaStar className="w-4 h-4" /> Favorite
+                </div>
+              )}
+            </DropdownMenuItem>
+          )}
 
           {/* <Protect
             condition={(check) => {
@@ -154,34 +226,78 @@ const FileCardActions = ({
             }}
             fallback={<></>}
           > */}
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => {
-                if (false /*file.shouldDelete*/) {
-                //   restoreFile({
-                //     fileId: file._id,
-                //   });
-                } else {
-                  setIsConfirmOpen(true);
-                }
-              }}
-              className="flex gap-1 items-center cursor-pointer"
-            >
-              {false /* file.shouldDelete */ ? (
+
+          <DropdownMenuItem
+            disabled={file.isTrash && !pathname?.includes("trash")}
+            onClick={() => {
+              if (file.isTrash && pathname?.includes("trash")) {
+                handleRestoreFile(file._id);
+              } else {
+                setIsConfirmOpen(true);
+              }
+            }}
+            className="flex gap-1 items-center cursor-pointer"
+          >
+
+            {file.isTrash && pathname?.includes("trash") && (
+              <>
+                <DropdownMenuSeparator />
                 <div className="flex gap-1 text-green-600 items-center cursor-pointer">
                   <UndoIcon className="w-4 h-4" /> Restore
                 </div>
-              ) : (
+              </>
+            )}
+
+            {pathname?.includes("favorites") && file.isTrash !== true ? (
+              <>
+                <DropdownMenuSeparator />
                 <div className="flex gap-1 text-red-600 items-center cursor-pointer">
-                  <TrashIcon className="w-4 h-4" /> Delete
+                  <TrashIcon className="w-4 h-4" /> Trash
                 </div>
-              )}
+              </>
+            ) : pathname?.includes("files") && file.isTrash !== true ? (
+              <>
+                <DropdownMenuSeparator />
+                <div className="flex gap-1 text-red-600 items-center cursor-pointer">
+                  <TrashIcon className="w-4 h-4" /> Trash
+                </div>
+              </>
+            ) : (
+              !pathname?.includes("trash") && (
+                <>
+                  <div className="flex gap-1 items-center text-gray-900 cursor-pointer">
+                    <TrashIcon className="w-4 h-4" /> Trashed
+                  </div>
+                </>
+              )
+            )}
+          </DropdownMenuItem>
+
+
+          
+            <DropdownMenuItem
+            onClick={() => {
+              setIsDeletePermenantly(true);
+            }}
+            >
+
+              {file.isTrash && pathname?.includes("trash") && (
+              
+              <div className="flex gap-1 text-red-600 items-center cursor-pointer">
+                  <TrashIcon className="w-4 h-4" /> Delete Permenantly
+                </div>
+
+                )}
+
             </DropdownMenuItem>
+
+
+          
           {/* </Protect> */}
         </DropdownMenuContent>
       </DropdownMenu>
     </>
-  )
-}
+  );
+};
 
-export default FileCardActions
+export default FileCardActions;

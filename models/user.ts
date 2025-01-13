@@ -17,6 +17,12 @@ const UserSchema = new Schema({
     hashedPassword: {
         type: String,
     },
+
+    isAdmin: {
+        type: Boolean,
+        default: false,
+    },
+
     resetPasswordToken: {
         type: String,
         required: false,

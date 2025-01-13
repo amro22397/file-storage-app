@@ -26,6 +26,7 @@ import { SearchParams } from "../dashboard/files/page";
     let query: any = {};
 
     const files = await File.find({
+        isTrash: false,
         title: { $regex: searchString, $options: "i"},
     }).sort({ createdAt: -1 });
 

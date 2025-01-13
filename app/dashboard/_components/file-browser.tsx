@@ -23,12 +23,14 @@ import { Label } from "@/components/ui/label";
 import UploadButton from "./UploadButton";
 import FileCard from "./file-card";
 import SearchBar from "./search-bar";
+import { Url } from "next/dist/shared/lib/router/router";
 
 export type UploadedFile = {
   _id: string,
   title: string,
-  file: File,
-  isFavorite: boolean,
+  file?: File | Url | any,
+  isFavorite?: boolean,
+  isTrash?: boolean,
 }
 
 

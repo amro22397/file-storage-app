@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -10,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, SearchIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -28,18 +30,23 @@ const SearchBar = ({
 
     const [searchTerm, setSearchTerm] = useState("");
     const [loading, setLoading] = useState(false);
+    const [type, setType] = useState("files");
 
     const router = useRouter();
+    const pathname = usePathname();
 
+    
+
+    const typeUrl = pathname?.split("/")[2];
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        if (!searchTerm) return router.push('/dashboard/files')
+        if (!searchTerm) return router.push(`/dashboard/${typeUrl}`)
 
         setLoading(true)
 
         const url = queryString.stringifyUrl({
-            url: '/dashboard/files',
+            url: `/dashboard/${typeUrl}`,
             query: {
                 searchTerm: searchTerm,
             }

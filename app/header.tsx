@@ -12,7 +12,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 
-const header = () => {
+const Header = () => {
   return (
     <div className="relative z-10 border-b py-4 bg-gray-50">
       <div className="items-center container mx-auto justify-between flex">
@@ -34,7 +34,7 @@ const header = () => {
           
           
             {/* if unauthenticated */}
-              <Button onClick={() => redirect('/login')}
+              <Button
               >Sign In</Button>
         </div>
       </div>
@@ -42,4 +42,4 @@ const header = () => {
   )
 }
 
-export default header
+export default Header

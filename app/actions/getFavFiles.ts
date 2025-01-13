@@ -18,6 +18,7 @@ export default async function getFavFiles(params: SearchParams) {
 
     const favFiles = await File.find({
         isFavorite: true,
+        isTrash: false,
         title: { $regex: searchString, $options: "i" },
     })
     .sort({ createdAt: -1 });
