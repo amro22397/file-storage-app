@@ -12,6 +12,11 @@ const FileSchema = new Schema({
         required: true,
     },
 
+    isFavorite: {
+        type: Boolean,
+        default: false,
+    }
+
 }, {timestamps: true})
 
 

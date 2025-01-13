@@ -36,16 +36,33 @@ import { UploadedFile } from "./file-browser";
 
 const FileCardActions = ({
     file,
-    isFavorited,
   }: {
-    file: UploadedFile & { url: string | null };
-    isFavorited: boolean;
+    file: UploadedFile
   }) => {
 
     // const { toast } = useToast();
 
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
+
+
+    const handleFavourite = async (id: string) => {
+
+
+      const res = await axios.put(`/api/upload/favourite/${id}`)
+
+      if (res.data.success) {
+        toast({
+          title: res.data.message,
+        });
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }
+
+
+    }
 
 
     const handleDeleteFile = async (id: string) => {
@@ -108,13 +125,15 @@ const FileCardActions = ({
 
           <DropdownMenuItem
             onClick={() => {
+              handleFavourite(file._id);
+
             //   toggleFavorite({
             //     fileId: file._id,
             //   });
             }}
             className="flex gap-1 items-center cursor-pointer"
           >
-            {isFavorited ? (
+            {file.isFavorite ? (
               <div className="flex gap-1 items-center">
                 <StarIcon className="w-4 h-4" /> Unfavorite
               </div>

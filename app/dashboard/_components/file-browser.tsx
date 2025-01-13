@@ -22,11 +22,13 @@ import {
 import { Label } from "@/components/ui/label";
 import UploadButton from "./UploadButton";
 import FileCard from "./file-card";
+import SearchBar from "./search-bar";
 
 export type UploadedFile = {
   _id: string,
   title: string,
-  file: File
+  file: File,
+  isFavorite: boolean,
 }
 
 
@@ -55,7 +57,7 @@ function Placeholder() {
     title: string;
     favoritesOnly?: boolean;
     deletedOnly?: boolean;
-    files: UploadedFile[];
+    files?: UploadedFile[];
   }) {
 
     const [query, setQuery] = useState("");
@@ -70,7 +72,7 @@ function Placeholder() {
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-4xl font-bold">{title}</h1>
 
-        {/* <SearchBar query={query} setQuery={setQuery} /> */}
+        <SearchBar query={query} setQuery={setQuery} />
 
         <UploadButton />
       </div>

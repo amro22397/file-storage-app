@@ -10,9 +10,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, SearchIcon } from "lucide-react";
-import { Dispatch, SetStateAction } from "react";
+import { useRouter } from "next/navigation";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
+import queryString from "query-string"
 
 const SearchBar = ({
     query,
@@ -22,48 +25,56 @@ const SearchBar = ({
     setQuery: Dispatch<SetStateAction<string>>;
   }) => {
 
-    const form = useForm({
 
-    })
+    const [searchTerm, setSearchTerm] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const router = useRouter();
 
 
-    async function onSubmit(){
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+        if (!searchTerm) return router.push('/dashboard/files')
 
+        setLoading(true)
+
+        const url = queryString.stringifyUrl({
+            url: '/dashboard/files',
+            query: {
+                searchTerm: searchTerm,
+            }
+        }, {skipNull: true})
+
+        router.push(url)
+        setSearchTerm("");
+
+
+        setLoading(false)
     }
-    
+
+    console.log(searchTerm)
   return (
     <div>
-    <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={handleSubmit}
         className="flex gap-2 items-center"
       >
-        <FormField
-          control={form.control}
-          name="query"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input {...field} placeholder="your file names" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <Input type="text" defaultValue={searchTerm}
+        onChange={(e: any) => setSearchTerm(e.target.value)}
+         placeholder="your file names" />
 
         <Button
           size="sm"
           type="submit"
-          disabled={form.formState.isSubmitting}
           className="flex gap-1"
         >
-          {form.formState.isSubmitting && (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          )}
-          <SearchIcon /> Search
+            {loading ? 
+            <Loader2 className="h-4 w-4 animate-spin" /> : (
+                <> <SearchIcon /> Search </>
+            )}
+          
         </Button>
       </form>
-    </Form>
   </div>
   )
 }
