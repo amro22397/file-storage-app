@@ -132,9 +132,11 @@ function Placeholder({ email }: { email: string }) {
           </div>
         </TabsContent>
 
-        <TabsContent value="table">
+        {files?.length !== 0 && (
+          <TabsContent value="table">
           <DataTable columns={columns} data={files} />
         </TabsContent>
+        )}
 
       </Tabs>
 
