@@ -300,14 +300,14 @@ export function RegisterForm({
 
               <div className="flex flex-col gap-3">
               <Button type="submit" className="w-full">
-                {loading ? <Loader2 /> : "Register"}
+                {loading ? <Loader2 className="animate-spin" /> : "Register"}
                 </Button>
                 
                 <Button variant="outline" className="w-full"
                 onClick={handleSignWithGoogle}
                 type="button">
                   
-                  {loadingGoogle ? <Loader2 /> : 
+                  {loadingGoogle ? <Loader2 className="animate-spin" /> : 
                   <>
                   
                   <Image 

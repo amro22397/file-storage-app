@@ -38,28 +38,28 @@ import FileCardActions from "./file-actions";
     return (
         <Card>
         <CardHeader className="relative">
-          <CardTitle className="flex gap-2 text-base font-normal">
-            <div className="flex justify-center">
-            {typeIcons[file.type]}
-                </div>{" "}
-            {file.name}
+          <CardTitle className="flex flex-col gap-2 text-base font-normal">
+            <span className="text-lg font-semibold tracking-wide">{file.title}</span>
+            {true && (
+              <span className="text-md h-7 overflow-hidden overflow-ellipsis">{file.name}</span>
+            )}
           </CardTitle>
           <div className="absolute top-2 right-2">
             <FileCardActions isFavorited={file.isFavorited} file={file} />
           </div>
         </CardHeader>
         <CardContent className="h-[200px] flex justify-center items-center">
-          {file.type === "image" && file.file && (
-            <Image alt={file.name} width="200" height="100" src={file.file} />
+          {file.type.includes("image") && file.file ? (
+            <Image alt={file.name} width="250" height="100" src={file.file}
+            className="object-fill h-[175px] max-w-full" />
+          ) : (
+            <FileTextIcon size={64} />
           )}
-  
-          {file.type === "csv" && <GanttChartIcon className="w-20 h-20" />}
-          {file.type === "pdf" && <FileTextIcon className="w-20 h-20" />}
         </CardContent>
-        <CardFooter className="flex justify-between">
+        <CardFooter className="flex justify-between my-1">
           <div className="flex gap-2 text-xs text-gray-700 w-40 items-center">
-            <Avatar className="w-6 h-6">
-              <AvatarImage src={"" /* userProfile?.image */} />
+            {/* <Avatar className="w-6 h-6">
+              <AvatarImage src= />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             {"" /* userProfile?.name */}

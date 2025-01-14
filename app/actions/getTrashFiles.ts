@@ -4,7 +4,7 @@ import { File } from "@/models/files";
 
  
 
- export default async function getTrashFiles(params: SearchParams) {
+ export default async function getTrashFiles(params: SearchParams, email: string | null | undefined) {
 
     try {
         mongoose.connect(process.env.MONGO_URL as string);
@@ -20,6 +20,7 @@ import { File } from "@/models/files";
         const files = await File.find({
             isTrash: true,
             title: { $regex: searchString, $options: "i" },
+            emailRef: { $in: email },
         })
         .sort({ createdAt: -1 });
 

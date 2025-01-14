@@ -8,7 +8,7 @@ import Image from "next/image";
 import { GridIcon, Loader2, RowsIcon } from "lucide-react";
 // import { SearchBar } from "./search-bar";
 import { useState } from "react";
-// import { DataTable } from "./file-table";
+import DataTable from "./file-table";
 // import { columns } from "./columns";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -24,6 +24,7 @@ import UploadButton from "./UploadButton";
 import FileCard from "./file-card";
 import SearchBar from "./search-bar";
 import { Url } from "next/dist/shared/lib/router/router";
+import { columns } from "./columns";
 
 export type UploadedFile = {
   _id: string,
@@ -34,7 +35,7 @@ export type UploadedFile = {
 }
 
 
-function Placeholder() {
+function Placeholder({ email }: { email: string }) {
     return (
       <div className="flex flex-col gap-8 w-full items-center mt-24">
         <Image
@@ -44,7 +45,7 @@ function Placeholder() {
           src="/empty.svg"
         />
         <div className="text-2xl">You have no files, upload one now</div>
-        <UploadButton />
+        <UploadButton email={email} />
       </div>
     );
   }
@@ -55,11 +56,13 @@ function Placeholder() {
     favoritesOnly,
     deletedOnly,
     files,
+    email
   }: {
     title: string;
     favoritesOnly?: boolean;
     deletedOnly?: boolean;
     files?: UploadedFile[];
+    email?: string | any;
   }) {
 
     const [query, setQuery] = useState("");
@@ -71,12 +74,12 @@ function Placeholder() {
     return (
 
         <div>
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-row justify-between items-center mb-8">
         <h1 className="text-4xl font-bold">{title}</h1>
 
         <SearchBar query={query} setQuery={setQuery} />
 
-        <UploadButton />
+        <UploadButton email={email} />
       </div>
 
       <Tabs defaultValue="grid">
@@ -91,7 +94,7 @@ function Placeholder() {
             </TabsTrigger>
           </TabsList>
 
-          <div className="flex gap-2 items-center">
+          <div className="hidden gap-2 items-center">
             <Label htmlFor="type-select">Type Filter</Label>
             <Select
               value={type}
@@ -107,7 +110,7 @@ function Placeholder() {
                 <SelectItem value="image">Image</SelectItem>
                 <SelectItem value="csv">CSV</SelectItem>
                 <SelectItem value="pdf">PDF</SelectItem>
-              </SelectContent>
+              </SelectContent> 
             </Select>
           </div>
         </div>
@@ -128,12 +131,14 @@ function Placeholder() {
             })}
           </div>
         </TabsContent>
+
         <TabsContent value="table">
-          {/* <DataTable columns={columns} data={modifiedFiles} /> */}
+          <DataTable columns={columns} data={files} />
         </TabsContent>
+
       </Tabs>
 
-      {files?.length === 0 && <Placeholder />}
+      {files?.length === 0 && <Placeholder email={email} />}
     </div>
 
 

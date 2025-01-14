@@ -3,7 +3,7 @@ import { SearchParams } from "../dashboard/files/page";
 import { File } from "@/models/files";
 
 
-export default async function getFavFiles(params: SearchParams) {
+export default async function getFavFiles(params: SearchParams, email: string | null | undefined) {
 
     try {
         mongoose.connect(process.env.MONGO_URL as string);
@@ -20,6 +20,7 @@ export default async function getFavFiles(params: SearchParams) {
         isFavorite: true,
         isTrash: false,
         title: { $regex: searchString, $options: "i" },
+        emailRef: { $in: email },
     })
     .sort({ createdAt: -1 });
 

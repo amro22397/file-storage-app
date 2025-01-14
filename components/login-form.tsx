@@ -152,13 +152,13 @@ export function LoginForm({
               <div className="flex flex-col gap-3">
 
               <Button type="submit" className="w-full">
-                {loading ? <Loader2 /> : "Login"}
+                {loading ? <Loader2 className="animate-spin"/> : "Login"}
               </Button>
               <Button variant="outline" className="w-full"
               onClick={handleSignWithGoogle}
               type="button">
                 
-                {loadingGoogle ? <Loader2 /> : 
+                {loadingGoogle ? <Loader2 className="animate-spin" /> : 
                 <>
                 <Image 
                 src={'/Google_Icons-09-512.webp'}

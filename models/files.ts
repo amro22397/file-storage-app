@@ -7,9 +7,24 @@ const FileSchema = new Schema({
         required: true,
     },
 
+    name: {
+        type: String,
+        required: true,
+    },
+
     file: {
         type: String,
         required: true,
+    },
+
+    emailRef: {
+        ref: "User",
+        type: String,
+        required: true,
+    },
+
+    type: {
+        type: String,
     },
 
     isFavorite: {

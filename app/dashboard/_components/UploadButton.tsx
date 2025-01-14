@@ -44,7 +44,7 @@ const formSchema = z.object({
     file: z.custom<FileList>((val) => val instanceof FileList, "Required").refine((files) => files.length > 0, "Required")
 })
 
-const UploadButton = () => {
+const UploadButton = ({ email }: { email: string }) => {
     const { toast } = useToast();
 
     const [isFileDialogOpen, setIsFileDialogOpen] = useState(false);
@@ -54,6 +54,8 @@ const UploadButton = () => {
     const [downloadURL, setDownloadURL] = useState("");
     const [loading, setLoading] = useState(false);
     const [fileLoading, setFileLoading] = useState(false);
+    const [fileType, setFileType] = useState("");
+    const [fileName, setFileName] = useState("");
 
     const form = useForm({
       resolver: zodResolver(formSchema),
@@ -71,8 +73,13 @@ const UploadButton = () => {
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.files && event.target.files[0]) {
-        console.log(event)
+        console.log(event.target.files[0])
         setFile(event.target.files[0]);
+
+        setFileType(event.target.files[0].type)
+        setFileName(event.target.files[0].name)
+        
+
       }
     }
 
@@ -86,6 +93,7 @@ const UploadButton = () => {
         toast({
           title: "No file selected",
         })
+        setFileLoading(false)
         return;
       }
 
@@ -128,10 +136,20 @@ const UploadButton = () => {
 
         const res = await axios.post("/api/upload", {
           title: title,
+          name: fileName,
           file: downloadURL,
+          type: fileType,
+          emailRef: email,
         })
 
-        console.log(res)
+        if (!res.data.success) {
+          toast({
+            variant: "destructive",
+            title: res.data.message,
+          })
+          setLoading(false);
+          return;
+        }
 
         if (res.data.success) {
           toast({
@@ -193,7 +211,7 @@ const UploadButton = () => {
     </DialogTrigger>
     <DialogContent>
       <DialogHeader>
-        <DialogTitle className="mb-8">Upload your File Here</DialogTitle>
+        <DialogTitle className="mb-1">Upload File</DialogTitle>
         <DialogDescription>
           This file will be accessible by anyone in your organization
         </DialogDescription>
@@ -207,6 +225,7 @@ const UploadButton = () => {
 
             <Input type="text" onChange={(e) => setTitle(e.target.value)} />
             
+            <div className="flex flex-row gap-4">
             <Input type="file" onChange={(e: any) => {
               handleFileChange(e);
             }}  />
@@ -214,13 +233,15 @@ const UploadButton = () => {
             <Button 
             type="button"
             onClick={handleUpload}
+            className="bg-green-500 hover:bg-green-500 active:scale-95"
             >
               {fileLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Upload File'}
             </Button>
+            </div>
 
             <Button
               type="submit"
-              disabled={form.formState.isSubmitting}
+              // disabled={downloadURL.trim() === "" || title.trim() === ""}
               className="flex gap-1"
             >
               {form.formState.isSubmitting && (
@@ -234,6 +255,7 @@ const UploadButton = () => {
         <Link 
         href={downloadURL}
         target="_blank"
+        className="hidden"
         >
         Download
         </Link>

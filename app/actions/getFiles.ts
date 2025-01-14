@@ -7,7 +7,7 @@ import { SearchParams } from "../dashboard/files/page";
 //   const jFiles = JSON.parse(JSON.stringify(files));
 
 
-  export default async function getFiles(params: SearchParams) {
+  export default async function getFiles(params: SearchParams, email: string | null | undefined) {
 
     try {
     mongoose.connect(process.env.MONGO_URL as string);
@@ -28,6 +28,7 @@ import { SearchParams } from "../dashboard/files/page";
     const files = await File.find({
         isTrash: false,
         title: { $regex: searchString, $options: "i"},
+        emailRef: { $in: email },
     }).sort({ createdAt: -1 });
 
     const jfiles = JSON.parse(JSON.stringify(files));

@@ -237,7 +237,7 @@ const page = ({ params }: any) => {
 
               <div className="flex flex-row justify-between w-full px-1 mt-2">
                 <Button type="submit" disabled={error.length > 0}>
-                  {loading ? <Loader2 /> : "Submit"}
+                  {loading ? <Loader2 className="animate-spin" /> : "Submit"}
                 </Button>
 
                 <Link

@@ -87,7 +87,7 @@ const ForgetForm = () => {
       required
       className='placeholder-gray-700' />
 
-      <Button type="submit">{loading ? <Loader2 /> : "Send"}</Button>
+      <Button type="submit">{loading ? <Loader2 className="animate-spin" /> : "Send"}</Button>
 
     </form>
 
