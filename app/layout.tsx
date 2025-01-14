@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/toaster"
 import AppProvider from "@/components/AppContext.js"
 import { Footer } from "./footer";
 import { getSession } from "@/actions/getUser";
-import Header from "./Header";
+import Header from "./HeaderMain";
 
 
 const geistSans = Geist({
