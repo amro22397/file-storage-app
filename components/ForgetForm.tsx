@@ -28,7 +28,7 @@ const ForgetForm = () => {
     const router = useRouter();
 
 
-    const handleSubmit = async (e: any) => {
+    const handleSubmit = async (e: any) => { 
         e.preventDefault();
 
         setLoading(true)
@@ -70,7 +70,7 @@ const ForgetForm = () => {
   
 
   return (
-    <Card className='flex flex-col justify-center items-start w-[400px] mx-auto my-80'>
+    <Card className='flex flex-col justify-center items-start w-[400px] mx-auto'>
   <CardHeader>
     <CardTitle className='text-2xl'>Forgot Password</CardTitle>
     <CardDescription className='text-gray-600'>Enter your email...<br/> 

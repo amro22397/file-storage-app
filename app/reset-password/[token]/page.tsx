@@ -173,7 +173,7 @@ const page = ({ params }: any) => {
     }, [session.status, router]); */
 
   return (
-    <div className="h-[95vh] flex justify-center items-center">
+    <div className="min-h-[85vh] flex justify-center items-center">
       <Card className="flex flex-col justify-center items-start w-[400px] mx-auto">
         <CardHeader>
           <CardTitle className="text-2xl">Reset Password</CardTitle>

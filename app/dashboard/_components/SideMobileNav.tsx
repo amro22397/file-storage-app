@@ -1,17 +1,19 @@
-"use client";
+import { Button } from '@/components/ui/button'
+import clsx from 'clsx'
+import { FileIcon, StarIcon, TrashIcon } from 'lucide-react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import React from 'react'
 
-import { Button } from "@/components/ui/button";
-import clsx from "clsx";
-import { FileIcon, StarIcon, TrashIcon } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+const SideMobileNav = () => {
 
-const SideNav = () => {
     const pathname = usePathname();
     console.log(pathname);
 
+
   return (
-    <div className="hidden w-40 lg:flex flex-col gap-4">
+    <div className="flex  lg:hidden flex-col gap-4 h-screen w-[50%]
+      absolute z-50 bg-white">
       <Link href="/dashboard/files">
         <Button
           variant={"link"}
@@ -48,4 +50,4 @@ const SideNav = () => {
   )
 }
 
-export default SideNav
+export default SideMobileNav

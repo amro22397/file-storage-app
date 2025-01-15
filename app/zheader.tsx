@@ -18,6 +18,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AiOutlineMenu } from "react-icons/ai";
+
 
 import { redirect, useRouter } from "next/navigation";
 
@@ -92,10 +94,17 @@ const Header = ({ session }: { session: any }) => {
                 >
                   Sign Out
                 </Button>
+
+                <Button>
+          <AiOutlineMenu />
+          </Button>
               </PopoverContent>
             </Popover>
           )}
 
+          <Button>
+          <AiOutlineMenu />
+          </Button>
 
         </div>
       </div>

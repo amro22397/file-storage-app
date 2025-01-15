@@ -5,7 +5,7 @@ import { useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api"; */
 // import { FileCard } from "./file-card";
 import Image from "next/image";
-import { GridIcon, Loader2, RowsIcon } from "lucide-react";
+import { FileIcon, GridIcon, Loader2, RowsIcon, StarIcon, TrashIcon } from "lucide-react";
 // import { SearchBar } from "./search-bar";
 import { useState } from "react";
 import DataTable from "./file-table";
@@ -25,6 +25,11 @@ import FileCard from "./file-card";
 import SearchBar from "./search-bar";
 import { Url } from "next/dist/shared/lib/router/router";
 import { columns } from "./columns";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
+import SideMobileNav from "./SideMobileNav";
 
 export type UploadedFile = {
   _id: string,
@@ -68,13 +73,20 @@ function Placeholder({ email }: { email: string }) {
     const [query, setQuery] = useState("");
     const [type, setType] = useState<File | "all" | any>("all");
 
+    const pathname = usePathname();
+    console.log(pathname);
+
 
 
 
     return (
 
-        <div>
-      <div className="flex flex-row justify-between items-center mb-8">
+        <div className="px-4 xl:px-0">
+
+          <SideMobileNav />
+
+      <div className="flex flex-row justify-between items-center mb-8
+      px-2 xl:px-0">
         <h1 className="text-4xl font-bold">{title}</h1>
 
         <SearchBar query={query} setQuery={setQuery} />
@@ -82,7 +94,7 @@ function Placeholder({ email }: { email: string }) {
         <UploadButton email={email} />
       </div>
 
-      <Tabs defaultValue="grid">
+      <Tabs defaultValue="grid" className="">
         <div className="flex justify-between items-center">
           <TabsList className="mb-2">
             <TabsTrigger value="grid" className="flex gap-2 items-center">
@@ -122,8 +134,9 @@ function Placeholder({ email }: { email: string }) {
           </div>
         )}
 
-        <TabsContent value="grid">
-          <div className="grid grid-cols-3 gap-4">
+        <TabsContent value="grid" className="">
+          <div className="grid xl:grid-cols-3 gap-4
+          sm:grid-cols-2">
             {files?.map((file) => {
               return (
                 <FileCard key={file._id} file={file} />

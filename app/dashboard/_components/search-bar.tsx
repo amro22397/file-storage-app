@@ -61,7 +61,7 @@ const SearchBar = ({
 
     console.log(searchTerm)
   return (
-    <div>
+    <div className="md:block hidden">
       <form
         onSubmit={handleSubmit}
         className="flex gap-2 items-center"

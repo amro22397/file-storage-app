@@ -19,19 +19,30 @@ import {
 } from "@/components/ui/popover";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-import { redirect, useRouter } from "next/navigation";
-
-
+import { redirect, usePathname, useRouter } from "next/navigation";
+import { AiOutlineMenu } from "react-icons/ai";
+import clsx from "clsx";
+import { FileIcon, StarIcon, TrashIcon } from "lucide-react";
+import { useState } from "react";
 
 const Header = ({ session }: { session: any }) => {
+
+  const [openMobileSideBar, setOpenMobileSideBar] = useState(false);
+
   const router = useRouter();
+
+  const pathname = usePathname();
+    console.log(pathname);
 
   // const session = useSession();
 
   // console.log(session);
 
   return (
-    <div className="relative z-10 border-b py-4 bg-gray-50">
+    <div
+      className="relative z-10 border-b py-4 bg-gray-50
+    px-[8.5px] sm:px-0"
+    >
       <div className="items-center container mx-auto justify-between flex">
         <Link href="/" className="flex gap-2 items-center text-xl text-black">
           <Image src="/logo.png" width="50" height="50" alt="file drive logo" />
@@ -44,21 +55,19 @@ const Header = ({ session }: { session: any }) => {
           </Button>
         )}
 
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           {/* <OrganizationSwitcher />
           <UserButton /> */}
 
           {!session?.user?.email && (
-                <Button
-                  onClick={() => {
-                    router.push("/login");
-                  }}
-                >
-                  Sign In
-                </Button>
-              )}
-
-              
+            <Button
+              onClick={() => {
+                router.push("/login");
+              }}
+            >
+              Sign In
+            </Button>
+          )}
 
           {session?.user?.email && (
             <Popover>
@@ -96,9 +105,15 @@ const Header = ({ session }: { session: any }) => {
             </Popover>
           )}
 
-
+          <AiOutlineMenu onClick={() => {
+            setOpenMobileSideBar(!openMobileSideBar);
+          }}
+          className="mx-2 lg:hidden cursor-pointer" size={30} />
         </div>
       </div>
+
+
+      
     </div>
   );
 };
