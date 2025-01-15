@@ -1,10 +1,5 @@
 import type { NextConfig } from "next";
 
-module.exports = {
-  reactStrictMode: true,
-  output: 'standalone',
-};
-
 const nextConfig: NextConfig = {
   
   images: {
@@ -22,7 +17,10 @@ const nextConfig: NextConfig = {
 
   eslint: {
     ignoreDuringBuilds: true,
-  }
+  },
+
+  reactStrictMode: true,
+  output: 'standalone',
 };
 
 
