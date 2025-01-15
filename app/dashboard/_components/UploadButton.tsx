@@ -153,7 +153,7 @@ const UploadButton = ({ email }: { email: string }) => {
 
         if (res.data.success) {
           toast({
-            className: "bg-green-500 text-white",
+            className: "bg-green-500 text-white border-none",
             title: "Saved successfully",
           })
 
@@ -226,7 +226,9 @@ const UploadButton = ({ email }: { email: string }) => {
             <Input type="text" onChange={(e) => setTitle(e.target.value)} />
             
             <div className="flex flex-row gap-4">
-            <Input type="file" onChange={(e: any) => {
+            <Input type="file" className="file:bg-gray-500 file:my-1 file:px-2 file:rounded-full file:text-white
+            file:active:scale-95 file:cursor-pointer file:mr-2"
+             onChange={(e: any) => {
               handleFileChange(e);
             }}  />
 

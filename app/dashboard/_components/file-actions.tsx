@@ -184,7 +184,7 @@ const FileCardActions = ({
             <DropdownMenuItem
               onClick={() => {
                 if (!file.file) return;
-                window.open(file.file, "_blank");
+                window.open(file.file, "_blank"); 
               }}
               className="flex gap-1 items-center cursor-pointer"
             >

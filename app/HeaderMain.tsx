@@ -23,11 +23,14 @@ import { redirect, usePathname, useRouter } from "next/navigation";
 import { AiOutlineMenu } from "react-icons/ai";
 import clsx from "clsx";
 import { FileIcon, StarIcon, TrashIcon } from "lucide-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AppContext } from "@/context/AppContext";
 
 const Header = ({ session }: { session: any }) => {
 
-  const [openMobileSideBar, setOpenMobileSideBar] = useState(false);
+
+  const { isOpenMobileNav, setIsOpenMobileNav } = useContext(AppContext);
+
 
   const router = useRouter();
 
@@ -106,7 +109,7 @@ const Header = ({ session }: { session: any }) => {
           )}
 
           <AiOutlineMenu onClick={() => {
-            setOpenMobileSideBar(!openMobileSideBar);
+            setIsOpenMobileNav(!isOpenMobileNav);
           }}
           className="mx-2 lg:hidden cursor-pointer" size={30} />
         </div>

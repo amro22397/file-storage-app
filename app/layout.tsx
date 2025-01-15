@@ -6,6 +6,7 @@ import AppProvider from "@/components/AppContext.js"
 import { Footer } from "./footer";
 import { getSession } from "@/actions/getUser";
 import Header from "./HeaderMain";
+import AppContextProvider from "../context/AppContext";
 
 
 const geistSans = Geist({
@@ -39,12 +40,15 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased
         `}
       >
+        <AppContextProvider>
         <AppProvider session>
           <Header session={session} />
         {children}
         <Toaster />
         <Footer />
         </AppProvider>
+        </AppContextProvider>
+        
           
       </body>
     </html>

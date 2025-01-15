@@ -1,9 +1,12 @@
 import { Button } from '@/components/ui/button'
+import { AppContext } from '@/context/AppContext'
 import clsx from 'clsx'
 import { FileIcon, StarIcon, TrashIcon } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React from 'react'
+import React, { useContext } from 'react'
+import { IoIosCloseCircleOutline } from "react-icons/io";
+
 
 const SideMobileNav = () => {
 
@@ -11,9 +14,19 @@ const SideMobileNav = () => {
     console.log(pathname);
 
 
+    const { isOpenMobileNav, setIsOpenMobileNav } = useContext(AppContext);
+
+
   return (
-    <div className="flex  lg:hidden flex-col gap-4 h-screen w-[50%]
-      absolute z-50 bg-white">
+    <div className=''>
+    
+    {isOpenMobileNav && (
+        <div className="flex  lg:hidden flex-col gap-4 h-screen w-[50%]
+     absolute z-40 bg-white">
+        <IoIosCloseCircleOutline size={20} className='absolute top-[-30px] right-3 z-50
+        text-red-600 cursor-pointer hover:text-red-700'
+         onClick={() => setIsOpenMobileNav(false)}/>
+
       <Link href="/dashboard/files">
         <Button
           variant={"link"}
@@ -47,6 +60,10 @@ const SideMobileNav = () => {
         </Button>
       </Link>
     </div>
+    )}
+    
+    </div>
+    
   )
 }
 

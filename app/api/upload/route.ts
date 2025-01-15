@@ -12,7 +12,7 @@ export async function POST(req: Request) {
     const fileName = file.name;
     console.log(fileName); */
 
-    if (!title) {
+    if (title.trim() === "" || !title) {
         return Response.json({
             success: false,
             message: "You need to provide a title"

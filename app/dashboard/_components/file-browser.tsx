@@ -72,6 +72,7 @@ function Placeholder({ email }: { email: string }) {
 
     const [query, setQuery] = useState("");
     const [type, setType] = useState<File | "all" | any>("all");
+    const [gridOrTable, setGridOrTable] = useState(localStorage.getItem("gridOrTable") || "grid");
 
     const pathname = usePathname();
     console.log(pathname);
@@ -94,14 +95,22 @@ function Placeholder({ email }: { email: string }) {
         <UploadButton email={email} />
       </div>
 
-      <Tabs defaultValue="grid" className="">
+      <Tabs defaultValue={gridOrTable} className="">
         <div className="flex justify-between items-center">
           <TabsList className="mb-2">
-            <TabsTrigger value="grid" className="flex gap-2 items-center">
+            <TabsTrigger value="grid" className="flex gap-2 items-center"
+            onClick={() => {
+              localStorage.setItem("gridOrTable", "grid");
+            }}
+            >
               <GridIcon />
               Grid
             </TabsTrigger>
-            <TabsTrigger value="table" className="flex gap-2 items-center">
+            <TabsTrigger value="table" className="flex gap-2 items-center"
+            onClick={() => {
+              localStorage.setItem("gridOrTable", "table");
+            }}
+            >
               <RowsIcon /> Table
             </TabsTrigger>
           </TabsList>

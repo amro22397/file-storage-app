@@ -81,6 +81,16 @@ export const columns: ColumnDef<any>[] = [
       }
   },
 
+
+{
+  header: "Actions",
+  cell: ({ row }) => {
+    return (
+      <FileCardActions isFavorited={row.original.isFavorited} file={row.original} />
+    )
+  }
+},
+
 ]
 
  
