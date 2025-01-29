@@ -38,7 +38,7 @@ export default async function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased
-        `}
+        sm:max-w-[87.5%] max-w-[99.5%] mx-auto`}
       >
         <AppContextProvider>
         <AppProvider session>

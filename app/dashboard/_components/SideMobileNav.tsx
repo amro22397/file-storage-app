@@ -30,6 +30,7 @@ const SideMobileNav = () => {
       <Link href="/dashboard/files">
         <Button
           variant={"link"}
+          onClick={() => setIsOpenMobileNav(false)}
           className={clsx("flex gap-2", {
             "text-blue-500": pathname?.includes("/dashboard/files"),
           })}
@@ -41,6 +42,7 @@ const SideMobileNav = () => {
       <Link href="/dashboard/favorites">
         <Button
           variant={"link"}
+          onClick={() => setIsOpenMobileNav(false)}
           className={clsx("flex gap-2", {
             "text-blue-500": pathname?.includes("/dashboard/favorites"),
           })}
@@ -52,6 +54,7 @@ const SideMobileNav = () => {
       <Link href="/dashboard/trash">
         <Button
           variant={"link"}
+          onClick={() => setIsOpenMobileNav(false)}
           className={clsx("flex gap-2", {
             "text-blue-500": pathname?.includes("/dashboard/trash"),
           })}
