@@ -109,7 +109,8 @@ function Placeholder({ email }: { email: string }) {
         <UploadButton email={email} />
       </div>
 
-      <div className="text-center text-md text-gray-600">
+      <div className="text-center text-md text-gray-600
+      max-xl:my-3">
         You can upload any file you want (Audio, Video, Image, PDF, Word)
       </div>
 
