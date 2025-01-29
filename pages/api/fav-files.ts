@@ -32,15 +32,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 
     if (req.method === "GET") {
-      const files = await File.find({
-          isTrash: false,
-          title: { $regex: searchString, $options: "i"},
-          emailRef: { $in: email },
-      }).sort({ createdAt: -1 });
-      
+       const favFiles = await File.find({
+              isFavorite: true,
+              isTrash: false,
+              title: { $regex: searchString, $options: "i" },
+              emailRef: { $in: email },
+          })
+          .sort({ createdAt: -1 });
+
         return res.status(200).json({
             success: true,
-            data: files,
+            data: favFiles,
         })
     }
 

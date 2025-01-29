@@ -1,4 +1,4 @@
-import { File } from "@/models/files";
+import File from "@/models/files";
 import mongoose from "mongoose";
 
 

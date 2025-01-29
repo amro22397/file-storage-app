@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "file-app-9fac6",
+    "localhost": "file-app-9fac6",
+    "localhost2": "file-app-9fac6"
+  },
+  "targets": {},
+  "etags": {}
+}

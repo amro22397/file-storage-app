@@ -13,10 +13,10 @@ const FilePage = ({ email, searchTerm }: {
     searchTerm?: string | undefined;
 }) => {
 
-    const { data: session, status } = useSession({
-        required: true,
-      });
-      console.log(session)
+    // const { data: session, status } = useSession({
+    //     required: true,
+    //   });
+    //   console.log(session)
 
       const [files, setFiles] = useState([]);
 

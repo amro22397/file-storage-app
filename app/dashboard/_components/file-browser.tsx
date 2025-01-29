@@ -109,6 +109,10 @@ function Placeholder({ email }: { email: string }) {
         <UploadButton email={email} />
       </div>
 
+      <div className="text-center text-md text-gray-600">
+        You can upload any file you want (Audio, Video, Image, PDF, Word)
+      </div>
+
       <Tabs defaultValue={gridOrTable} className="">
         <div className="flex justify-between items-center">
           <TabsList className="mb-2">

@@ -16,6 +16,7 @@ import {
   // import { useQuery } from "convex/react";
   // import { api } from "../../../../convex/_generated/api";
   import Image from "next/image";
+  import ReactPlayer from 'react-player';
   // import { FileCardActions } from "./file-actions";
 
 
@@ -36,7 +37,7 @@ import FileCardActions from "./file-actions";
       } as any;
       
     return (
-        <Card>
+        <Card className="">
         <CardHeader className="relative">
           <CardTitle className="flex flex-col gap-2 text-base font-normal">
             <span className="text-lg font-semibold tracking-wide">{file.title}</span>
@@ -48,11 +49,19 @@ import FileCardActions from "./file-actions";
             <FileCardActions isFavorited={file.isFavorited} file={file} />
           </div>
         </CardHeader>
-        <CardContent className="h-[200px] flex justify-center items-center">
+        <CardContent className="h-[200px] w-full flex justify-center items-center">
           {file.type.includes("image") && file.file ? (
             <Image alt={file.name} width="250" height="100" src={file.file}
             className="object-fill h-[175px] max-w-full" />
-          ) : (
+          ) : file.type.includes("audio") || file.type.includes("video")  ? (
+            <div className="w-full h-full">
+              <ReactPlayer url={file.file}
+              width="100%"
+              height="100%"
+              controls />
+            </div>
+          )
+           : (
             <FileTextIcon size={64} />
           )}
         </CardContent>
