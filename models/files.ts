@@ -1,7 +1,7 @@
-import { model, models, Schema } from "mongoose";
+import mongoose from 'mongoose';
 
 
-const FileSchema = new Schema({
+const FileSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
@@ -39,4 +39,4 @@ const FileSchema = new Schema({
 }, {timestamps: true})
 
 
-export const File = models?.File || model("File", FileSchema);
+export default mongoose.models?.File || mongoose.model("File", FileSchema);

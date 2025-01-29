@@ -7,7 +7,7 @@ import { api } from "../../../../convex/_generated/api"; */
 import Image from "next/image";
 import { FileIcon, GridIcon, Loader2, RowsIcon, StarIcon, TrashIcon } from "lucide-react";
 // import { SearchBar } from "./search-bar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DataTable from "./file-table";
 // import { columns } from "./columns";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -30,6 +30,7 @@ import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import SideMobileNav from "./SideMobileNav";
+import axios from "axios";
 
 export type UploadedFile = {
   _id: string,
@@ -74,8 +75,21 @@ function Placeholder({ email }: { email: string }) {
     const [type, setType] = useState<File | "all" | any>("all");
     const [gridOrTable, setGridOrTable] = useState(localStorage.getItem("gridOrTable") || "grid");
 
+    // const [newfiles, setNewfiles] = useState([]);
+
     const pathname = usePathname();
     console.log(pathname);
+
+    // const fetchFiles = async () => {
+    //   const res = await axios.get("/api/files");
+
+    //   console.log(res.data);
+
+    // }
+
+    // useEffect(() => {
+    //   fetchFiles();
+    // }, []);
 
 
 
