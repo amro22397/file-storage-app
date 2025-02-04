@@ -1,5 +1,4 @@
 import { connectToDatabase } from "../../utils/db";
-import { getSession } from "@/actions/getUser";
 import { getServerSession } from 'next-auth';
 import File from "../../models/files";
 import { authOptions } from './auth/[...nextauth]';

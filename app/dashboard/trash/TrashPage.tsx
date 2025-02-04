@@ -30,7 +30,8 @@ const TrashPage = ({ email, searchTerm }: {
       
   return (
     <div>
-      <FileBrowser title="Trash" files={trashFiles} email={email} deletedOnly />
+      <FileBrowser title="Trash" files={trashFiles} email={email}
+      fetchTrash={fetchFiles} deletedOnly />
     </div>
   )
 }

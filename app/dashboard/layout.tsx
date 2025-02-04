@@ -18,7 +18,8 @@ export default async function DashboardLayout({
     }
 
   return (
-    <main className="container mx-auto pt-12 min-h-screen">
+    <main className="container pt-12 min-h-screen
+    max-w-[99.5%] sm:max-w-[87.5%] mx-auto">
       <div className="flex gap-8">
         <SideNav />
 

@@ -31,7 +31,8 @@ const FavPage = ({ email, searchTerm }: {
 
   return (
     <div>
-        <FileBrowser title="Favorites" files={favFiles} email={email} favoritesOnly />
+        <FileBrowser title="Favorites" files={favFiles} email={email} 
+        fetchFav={fetchFiles} favoritesOnly />
     </div>
   )
 }

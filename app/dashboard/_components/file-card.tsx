@@ -25,8 +25,14 @@ import FileCardActions from "./file-actions";
   
   const FileCard = ({
     file,
+    fetchFiles,
+    fetchTrash,
+    fetchFav
   }: {
     file: any
+    fetchFiles?: () => void
+    fetchTrash?: () => void
+    fetchFav?: () => void
     // { isFavorited: boolean; url: string | null }
   }) => {
 
@@ -46,7 +52,8 @@ import FileCardActions from "./file-actions";
             )}
           </CardTitle>
           <div className="absolute top-2 right-2">
-            <FileCardActions isFavorited={file.isFavorited} file={file} />
+            <FileCardActions isFavorited={file.isFavorited} file={file}
+            fetchFiles={fetchFiles} fetchTrash={fetchTrash} fetchFav={fetchFav} />
           </div>
         </CardHeader>
         <CardContent className="h-[200px] w-full flex justify-center items-center">

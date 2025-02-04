@@ -44,9 +44,10 @@ const Header = ({ session }: { session: any }) => {
   return (
     <div
       className="relative z-10 border-b py-4 bg-gray-50
-    px-[8.5px] sm:px-0"
+    px-[8.5px] sm:px-0 "
     >
-      <div className="items-center container mx-auto justify-between flex">
+      <div className="items-center container justify-between flex
+      max-w-[99.5%] sm:max-w-[87.5%] mx-auto">
         <Link href="/" className="flex gap-2 items-center text-xl text-black">
           <Image src="/logo.png" width="50" height="50" alt="file drive logo" />
           FileDrive

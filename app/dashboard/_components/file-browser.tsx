@@ -41,7 +41,10 @@ export type UploadedFile = {
 }
 
 
-function Placeholder({ email }: { email: string }) {
+function Placeholder({ email, fetchFiles }: { 
+  email: string,
+  fetchFiles?: () => void
+ }) {
     return (
       <div className="flex flex-col gap-8 w-full items-center mt-24">
         <Image
@@ -51,7 +54,7 @@ function Placeholder({ email }: { email: string }) {
           src="/empty.svg"
         />
         <div className="text-2xl">You have no files, upload one now</div>
-        <UploadButton email={email} />
+        <UploadButton email={email} fetchFiles={fetchFiles} />
       </div>
     );
   }
@@ -62,13 +65,19 @@ function Placeholder({ email }: { email: string }) {
     favoritesOnly,
     deletedOnly,
     files,
-    email
+    email,
+    fetchFiles,
+    fetchTrash,
+    fetchFav
   }: {
     title: string;
     favoritesOnly?: boolean;
     deletedOnly?: boolean;
     files?: UploadedFile[];
     email?: string | any;
+    fetchFiles?: () => void
+    fetchTrash?: () => void;
+    fetchFav?: () => void;
   }) {
 
     const [query, setQuery] = useState("");
@@ -106,7 +115,7 @@ function Placeholder({ email }: { email: string }) {
 
         <SearchBar query={query} setQuery={setQuery} />
 
-        <UploadButton email={email} />
+        <UploadButton email={email} fetchFiles={fetchFiles} />
       </div>
 
       <div className="text-center text-md text-gray-600
@@ -167,7 +176,8 @@ function Placeholder({ email }: { email: string }) {
           sm:grid-cols-2">
             {files?.map((file) => {
               return (
-                <FileCard key={file._id} file={file} />
+                <FileCard key={file._id} file={file}
+                fetchFiles={fetchFiles} fetchTrash={fetchTrash} fetchFav={fetchFav} />
               ) ;
             })}
           </div>
@@ -181,7 +191,7 @@ function Placeholder({ email }: { email: string }) {
 
       </Tabs>
 
-      {files?.length === 0 && <Placeholder email={email} />}
+      {files?.length === 0 && <Placeholder email={email} fetchFiles={fetchFiles} />}
     </div>
 
 

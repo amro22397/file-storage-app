@@ -39,7 +39,8 @@ const FilePage = ({ email, searchTerm }: {
 
   return (
     <div>
-      <FileBrowser title="Your Files" files={files} email={email} />
+      <FileBrowser title="Your Files" files={files} email={email}
+      fetchFiles={fetchFiles} />
     </div>
   )
 }
